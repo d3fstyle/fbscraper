@@ -1,45 +1,31 @@
 # Meta Ads Library Scraper
 
-Automates reading a list of Facebook pages from MySQL and scraping each page's ads from the Meta Ads Library. Scraped ads are stored back in the database.
+Python scripts that scrape ads from the [Meta Ads Library](https://www.facebook.com/ads/library/) with Playwright, store results in MySQL, and optionally email summaries.
 
-A Facebook account used for heavy automated traffic may get restricted. Public (logged-out) access avoids that risk but will miss ads gated to 18+.
+This repo is published as a reference / archive. Credentials and private infra were removed; nothing here runs out of the box without your own config.
 
-## Setup
+## What it does
 
-1. Install dependencies:
+- Read Facebook page IDs from MySQL and scrape their ads (`scrapAdsFromPageIds.py`, `parseAdsFromIds.py`)
+- Search advertisers by keyword (`searchForAdvertisers.py`, `parseAdvertisersFromKW.py`)
+- Extract keywords / landing-page params (`extractKw.py`, `methods.py`)
+- Send HTML email digests (`sendNewFanPages.py`, `sendResume.py`)
 
-```bash
-pip install -r requirements.txt
-playwright install chromium
-```
+Heavy automated traffic against a Facebook login can get the account restricted. Logged-out access avoids that but skips 18+ ads.
 
-2. Copy `.env.example` to `.env` and fill in real values (never commit `.env`).
+## Configuration
 
-3. Required environment variables:
+Secrets live in environment variables (see `.env.example`). Copy to `.env` locally if you want to experiment — do not commit real values.
 
-| Variable | Used by |
-|----------|---------|
-| `DATABASE_URL` **or** `DB_USER` / `DB_PASS` / `DB_NAME` (+ optional `DB_HOST` / `DB_PORT`) | All DB scripts |
-| `FB_USER`, `FB_PASS` | Playwright scrapers / `auth_test.py` |
-| `EMAIL_FROM`, `EMAIL_TO`, `GMAIL_APP_PASSWORD` | Email report scripts |
-| `EMAIL_BCC` | Optional CC on `sendResume.py` |
-| `ADMINER_KW_URL_TEMPLATE` | Deep links in `sendNewFanPages.py` (`{kw}`) |
-| `ADMINER_ADS_URL_TEMPLATE` | Deep links in `sendResume.py` (`{date}`) |
-
-## Credential rotation checklist
-
-Before making this repository public (or after any leak), rotate:
-
-- [ ] Meta password for the scraper account (`FB_USER`)
-- [ ] Meta password for any other test accounts previously hardcoded
-- [ ] MySQL password for the scraper DB user
-- [ ] Gmail app password currently in use **and** any previous app passwords that appeared in git history
-- [ ] Review Adminer / DB admin access for the scraper database host
+Main variables: `DATABASE_URL` (or `DB_*`), `FB_USER` / `FB_PASS`, and for mail scripts `EMAIL_*`, `GMAIL_APP_PASSWORD`, `ADMINER_*_URL_TEMPLATE`.
 
 ## Dependencies
 
-- playwright==1.33.0 (this version helps avoid JavaScript heap memory overload)
-- BeautifulSoup4
-- Pandas
-- Youtube_dl
-- SQLAlchemy (mysql-connector-python==8.0.32)
+Listed in `requirements.txt`:
+
+- playwright (project historically used 1.33.0)
+- beautifulsoup4
+- pandas
+- youtube_dl
+- mysql-connector-python
+- sqlalchemy
