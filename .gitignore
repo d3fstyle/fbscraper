@@ -1,0 +1,30 @@
+# Secrets / local config
+.env
+.env.local
+config.local.py
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Scraped / local data
+*.csv
+*.sqlite
+*.db
+
+# Playwright / browser artifacts
+storage_state*
+cookies*
+playwright-report/
+test-results/
+
+# Editor / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
