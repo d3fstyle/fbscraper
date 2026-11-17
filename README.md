@@ -1,5 +1,7 @@
 # Meta Ads Library Scraper
 
+> **Disclaimer:** This repository is several years old and is **not maintained**. It is published only as a showroom of how the scraper was built at the time — not as a working or supported project.
+
 Python scripts that scrape ads from the [Meta Ads Library](https://www.facebook.com/ads/library/) with Playwright, store results in MySQL, and optionally email summaries.
 
 This repo is published as a reference / archive. Credentials and private infra were removed; nothing here runs out of the box without your own config.
